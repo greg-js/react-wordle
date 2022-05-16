@@ -1,0 +1,8 @@
+.timer {
+  top: calc(3rem + 2%);
+}
+
+.digit {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3rem;
+}
