@@ -1,8 +1,9 @@
-.timer {
-  top: calc(3rem + 2%);
+.timer-wrapper {
+  width: calc(100% - 2.5rem);
+  z-index: -1;
 }
 
 .digit {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 3rem;
+  height: 3rem;
 }

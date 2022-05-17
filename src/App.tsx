@@ -4,7 +4,6 @@ import { Keyboard } from './components/keyboard/Keyboard'
 import { InfoModal } from './components/modals/InfoModal'
 import { StatsModal } from './components/modals/StatsModal'
 import { SettingsModal } from './components/modals/SettingsModal'
-import { Timer } from './components/timer/Timer'
 import {
   WIN_MESSAGES,
   GAME_COPIED_MESSAGE,
@@ -262,9 +261,12 @@ function App() {
         setIsInfoModalOpen={setIsInfoModalOpen}
         setIsStatsModalOpen={setIsStatsModalOpen}
         setIsSettingsModalOpen={setIsSettingsModalOpen}
+        isGameBegun={isGameBegun}
+        isGameLost={isGameLost}
+        isGameWon={isGameWon}
+        isRevealing={isRevealing}
       />
-      <Timer isGameWon={isGameWon} isGameBegun={isGameBegun} />
-      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow">
+      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
         <div className="pb-6 grow">
           <Grid
             solution={solution}

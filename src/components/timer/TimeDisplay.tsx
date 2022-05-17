@@ -10,14 +10,20 @@ export const TimeDisplay = ({
   const milliseconds = Math.floor((time / 10) % 100)
 
   return (
-    <div>
-      <span className="digit mx-1">
+    <div className="digit text-4xl flex items-center justify-center">
+      <span>
         {`0${minutes}`.slice(-2)}
       </span>
-      <span className="digit mx-1">
+      <span>
+        :
+      </span>
+      <span>
         {`0${seconds}`.slice(-2)}
       </span>
-      <span className="digit mx-1">
+      <span>
+        .
+      </span>
+      <span>
         {`0${milliseconds}`.slice(-2)}
       </span>
     </div>

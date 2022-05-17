@@ -1,20 +1,25 @@
 import { useState, useEffect } from 'react'
 import { TimeDisplay } from './TimeDisplay'
 import './Timer.css'
+import { GAME_TITLE } from '../../constants/strings'
 
 type Props = {
   isGameBegun: boolean
   isGameWon: boolean
+  isGameLost: boolean
+  isRevealing: boolean
 }
 
 export const Timer = ({
   isGameBegun,
-  isGameWon
+  isGameWon,
+  isGameLost,
+  isRevealing
 }: Props) => {
   const [isRunning, setIsRunning] = useState(false)
   const [isPaused, setIsPaused] = useState(true)
   const [time, setTime] = useState(0)
-  
+
   const startTimer = () => {
     setIsRunning(true)
     setIsPaused(false)
@@ -22,6 +27,7 @@ export const Timer = ({
 
   useEffect(() => {
     let interval: any = null
+    const isGameOver = isGameWon || isGameLost;
 
     if (isRunning && !isPaused) {
       interval = setInterval(() => {
@@ -30,25 +36,26 @@ export const Timer = ({
     } else clearInterval(interval)
 
     if (isGameBegun) {
-      if (!isGameWon && !isRunning) {
+      if (!isGameOver && !isRunning) {
         startTimer()
       }
 
-      if (isGameWon && isRunning) {
-        setIsPaused(!isPaused)
+      if (isRevealing || (isGameOver && isRunning)) {
+        setIsPaused(true)
         setIsRunning(false)
       }
     }
 
-
     return () => {
       clearInterval(interval)
     }
-  }, [isRunning, isPaused, isGameBegun, isGameWon, setIsPaused])
+  }, [isRunning, isPaused, isGameBegun, isGameWon, isGameLost, setIsPaused, isRevealing])
 
-  return (
-    <div className="timer fixed rounded mx-5 bg-white">
+  return isGameBegun ? (
+    <div className="timer px-4 bg-white">
       <TimeDisplay time={time} />
     </div>
+  ) : (
+    <p className="text-xl font-bold dark:text-white">{GAME_TITLE}</p>
   )
 }
