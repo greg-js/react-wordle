@@ -14,6 +14,8 @@ type Props = {
   isGameWon: boolean
   isGameLost: boolean
   isRevealing: boolean
+  time: number
+  setTime: (value: number) => void
 }
 
 export const Navbar = ({
@@ -23,7 +25,9 @@ export const Navbar = ({
   isGameBegun,
   isGameWon,
   isGameLost,
-  isRevealing
+  isRevealing,
+  time,
+  setTime
 }: Props) => {
   return (
     <div className="mb-4">
@@ -44,6 +48,8 @@ export const Navbar = ({
             isGameLost={isGameLost}
             isGameBegun={isGameBegun}
             isRevealing={isRevealing}
+            time={time}
+            setTime={setTime}
           />
         </div>
         <div className="flex">

@@ -8,17 +8,20 @@ type Props = {
   isGameWon: boolean
   isGameLost: boolean
   isRevealing: boolean
+  time: number
+  setTime: (value: number) => void
 }
 
 export const Timer = ({
   isGameBegun,
   isGameWon,
   isGameLost,
-  isRevealing
+  isRevealing,
+  time,
+  setTime
 }: Props) => {
   const [isRunning, setIsRunning] = useState(false)
   const [isPaused, setIsPaused] = useState(true)
-  const [time, setTime] = useState(0)
 
   const startTimer = () => {
     setIsRunning(true)
@@ -31,7 +34,7 @@ export const Timer = ({
 
     if (isRunning && !isPaused) {
       interval = setInterval(() => {
-        setTime(time => time + 10)
+        setTime(time + 10)
       }, 10)
     } else clearInterval(interval)
 
@@ -49,7 +52,7 @@ export const Timer = ({
     return () => {
       clearInterval(interval)
     }
-  }, [isRunning, isPaused, isGameBegun, isGameWon, isGameLost, setIsPaused, isRevealing])
+  }, [setTime, time, isRunning, isPaused, isGameBegun, isGameWon, isGameLost, setIsPaused, isRevealing])
 
   return isGameBegun ? (
     <div className="timer px-4 bg-white">

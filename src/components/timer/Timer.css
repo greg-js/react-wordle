@@ -7,3 +7,8 @@
   font-family: 'Courier New', Courier, monospace;
   height: 3rem;
 }
+
+.digit--small {
+  font-family: 'Courier New', Courier, monospace;
+  height: 2rem;
+}

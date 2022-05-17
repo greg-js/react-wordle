@@ -9,7 +9,8 @@ import {
 
 export const addStatsForCompletedGame = (
   gameStats: GameStats,
-  count: number
+  count: number,
+  time: number
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
@@ -21,11 +22,17 @@ export const addStatsForCompletedGame = (
     stats.currentStreak = 0
     stats.gamesFailed += 1
   } else {
+    stats.lastSuccessfulTime = time
     stats.winDistribution[count] += 1
     stats.currentStreak += 1
+    stats.successHistory.push(time)
 
     if (stats.bestStreak < stats.currentStreak) {
       stats.bestStreak = stats.currentStreak
+    }
+
+    if (stats.personalBest < time) {
+      stats.personalBest = time
     }
   }
 
@@ -42,6 +49,9 @@ const defaultStats: GameStats = {
   bestStreak: 0,
   totalGames: 0,
   successRate: 0,
+  lastSuccessfulTime: -1,
+  personalBest: -1,
+  successHistory: []
 }
 
 export const loadStats = () => {

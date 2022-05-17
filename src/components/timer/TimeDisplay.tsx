@@ -1,16 +1,21 @@
 type Props = {
   time: number
+  isStatDisplay?: boolean
 }
 
 export const TimeDisplay = ({
-  time
+  time,
+  isStatDisplay = false
 }: Props) => {
   const minutes = Math.floor((time / 60000) % 60)
   const seconds = Math.floor((time / 1000) % 60)
   const milliseconds = Math.floor((time / 10) % 100)
 
+  const normalClasses = 'digit text-4xl flex items-center justify-center'
+  const statsDisplayClasses = 'digit--small text-2xl flex items-center justify-center'
+
   return (
-    <div className="digit text-4xl flex items-center justify-center">
+    <div className={isStatDisplay ? statsDisplayClasses : normalClasses}>
       <span>
         {`0${minutes}`.slice(-2)}
       </span>

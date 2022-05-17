@@ -27,3 +27,5 @@ export const CURRENT_STREAK_TEXT = 'Current streak'
 export const BEST_STREAK_TEXT = 'Best streak'
 export const DISCOURAGE_INAPP_BROWSER_TEXT =
   "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser."
+export const LAST_SUCCESSFUL_TIME_TEXT = 'Last'
+export const PERSONAL_BEST_TEXT = 'Best'

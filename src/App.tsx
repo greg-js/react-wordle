@@ -86,6 +86,7 @@ function App() {
   })
 
   const [stats, setStats] = useState(() => loadStats())
+  const [time, setTime] = useState(0)
 
   const [isHardMode, setIsHardMode] = useState(
     localStorage.getItem('gameMode')
@@ -240,12 +241,12 @@ function App() {
       setCurrentGuess('')
 
       if (winningWord) {
-        setStats(addStatsForCompletedGame(stats, guesses.length))
+        setStats(addStatsForCompletedGame(stats, guesses.length, time))
         return setIsGameWon(true)
       }
 
       if (guesses.length === MAX_CHALLENGES - 1) {
-        setStats(addStatsForCompletedGame(stats, guesses.length + 1))
+        setStats(addStatsForCompletedGame(stats, guesses.length + 1, time))
         setIsGameLost(true)
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           persist: true,
@@ -265,6 +266,8 @@ function App() {
         isGameLost={isGameLost}
         isGameWon={isGameWon}
         isRevealing={isRevealing}
+        time={time}
+        setTime={setTime}
       />
       <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
         <div className="pb-6 grow">
