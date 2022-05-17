@@ -11,26 +11,32 @@ export const TimeDisplay = ({
   const seconds = Math.floor((time / 1000) % 60)
   const milliseconds = Math.floor((time / 10) % 100)
 
-  const normalClasses = 'digit text-4xl flex items-center justify-center'
-  const statsDisplayClasses = 'digit--small text-2xl flex items-center justify-center'
+  const normalClasses = 'digit text-4xl flex items-center justify-center font-bold'
+  const statsDisplayClasses = 'digit--small text-2xl flex items-center justify-center font-bold'
 
   return (
     <div className={isStatDisplay ? statsDisplayClasses : normalClasses}>
-      <span>
-        {`0${minutes}`.slice(-2)}
-      </span>
-      <span>
-        :
-      </span>
-      <span>
-        {`0${seconds}`.slice(-2)}
-      </span>
-      <span>
-        .
-      </span>
-      <span>
-        {`0${milliseconds}`.slice(-2)}
-      </span>
+      {time === 0 ? (
+        <span>None</span>
+      ) : (
+        <>
+          <span>
+            {`0${minutes}`.slice(-2)}
+          </span>
+          <span>
+            :
+          </span>
+          <span>
+            {`0${seconds}`.slice(-2)}
+          </span>
+          <span>
+            .
+          </span>
+          <span>
+            {`0${milliseconds}`.slice(-2)}
+          </span>
+        </>
+      )}
     </div>
   )
 }

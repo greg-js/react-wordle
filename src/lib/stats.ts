@@ -31,7 +31,7 @@ export const addStatsForCompletedGame = (
       stats.bestStreak = stats.currentStreak
     }
 
-    if (stats.personalBest < time) {
+    if (!stats.personalBest || time < stats.personalBest) {
       stats.personalBest = time
     }
   }
@@ -49,8 +49,8 @@ const defaultStats: GameStats = {
   bestStreak: 0,
   totalGames: 0,
   successRate: 0,
-  lastSuccessfulTime: -1,
-  personalBest: -1,
+  lastSuccessfulTime: 0,
+  personalBest: 0,
   successHistory: []
 }
 

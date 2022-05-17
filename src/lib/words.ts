@@ -96,4 +96,12 @@ export const getWordOfDay = () => {
   }
 }
 
-export const { solution, solutionIndex, tomorrow } = getWordOfDay()
+export const getRandomWord = () => {
+  let newSolution = localeAwareUpperCase(WORDS[Math.floor(Math.random() * WORDS.length)])
+  solution = newSolution
+
+  return newSolution
+}
+
+export let { solution, solutionIndex, tomorrow } = getWordOfDay()
+

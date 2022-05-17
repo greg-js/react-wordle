@@ -25,6 +25,7 @@ import {
   solution,
   findFirstUnusedReveal,
   unicodeLength,
+  getRandomWord,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
 import {
@@ -150,6 +151,17 @@ function App() {
     setCurrentRowClass('')
   }
 
+  const loadNewGame = () => {
+    const newSolution = getRandomWord()
+    setIsGameBegun(false)
+    setIsGameLost(false)
+    setIsGameWon(false)
+    setTime(0)
+    setCurrentGuess('')
+    setGuesses([])
+    saveGameStateToLocalStorage({ guesses, solution: newSolution })
+  }
+
   useEffect(() => {
     saveGameStateToLocalStorage({ guesses, solution })
   }, [guesses])
@@ -268,6 +280,7 @@ function App() {
         isRevealing={isRevealing}
         time={time}
         setTime={setTime}
+        loadNewGame={loadNewGame}
       />
       <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
         <div className="pb-6 grow">

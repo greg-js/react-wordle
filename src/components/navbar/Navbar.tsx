@@ -16,6 +16,7 @@ type Props = {
   isRevealing: boolean
   time: number
   setTime: (value: number) => void
+  loadNewGame: () => void
 }
 
 export const Navbar = ({
@@ -27,7 +28,8 @@ export const Navbar = ({
   isGameLost,
   isRevealing,
   time,
-  setTime
+  setTime,
+  loadNewGame
 }: Props) => {
   return (
     <div className="mb-4">
@@ -39,7 +41,7 @@ export const Navbar = ({
           />
           <PlayIcon
             className="h-6 w-6 cursor-pointer dark:stroke-white"
-            onClick={() => setIsInfoModalOpen(true)}
+            onClick={() => loadNewGame()}
           />
         </div>
         <div className="timer-wrapper text-center">
