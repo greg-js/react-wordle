@@ -1,6 +1,5 @@
 import Countdown from 'react-countdown'
 import { StatBar } from '../stats/StatBar'
-import { Histogram } from '../stats/Histogram'
 import { GameStats } from '../../lib/localStorage'
 import { shareStatus } from '../../lib/share'
 import { tomorrow } from '../../lib/words'
@@ -62,11 +61,6 @@ export const StatsModal = ({
       <h4 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
         {GUESS_DISTRIBUTION_TEXT}
       </h4>
-      <Histogram
-        gameStats={gameStats}
-        isGameWon={isGameWon}
-        numberOfGuessesMade={numberOfGuessesMade}
-      />
       {(isGameLost || isGameWon) && (
         <div className="mt-5 sm:mt-6 columns-2 dark:text-white">
           <div>

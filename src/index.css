@@ -77,8 +77,12 @@ svg.cursor-pointer:hover {
   justify-content: space-between;
 }
 
-.visible-area {
-  height: 300px;
+.w-50pc {
+  width: 50%;
+}
+
+.flex .sm\:max-w-sm {
+  max-width: 36rem;
 }
 
 @keyframes revealAbsentCharCell {

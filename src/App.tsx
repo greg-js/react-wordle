@@ -14,6 +14,7 @@ import {
   DISCOURAGE_INAPP_BROWSER_TEXT,
   LOAD_IN_PROGRESS_GAME_TEXT,
   LOAD_FINISHED_GAME_TEXT,
+  START_NEW_GAME_WHILE_RUNNING_TEXT,
 } from './constants/strings'
 import {
   MAX_CHALLENGES,
@@ -69,32 +70,60 @@ function App() {
   const [isHighContrastMode, setIsHighContrastMode] = useState(
     getStoredIsHighContrastMode()
   )
+
+  const [hasLoaded, setHasLoaded] = useState(false)
   const [isRevealing, setIsRevealing] = useState(false)
-  const [guesses, setGuesses] = useState<[] | string[]>(() => {
-    const loaded = loadGameStateFromLocalStorage()
-
-    if (!loaded) return []
-
-    if (loaded.hasWon) {
-      showSuccessAlert(LOAD_FINISHED_GAME_TEXT(solution), {
-        durationMs: 2000,
-        onClose: () => loadNewGame(),
-      })
-      return []
-    }
-
-    if (loaded.guesses.length > 0) {
-      showErrorAlert(LOAD_IN_PROGRESS_GAME_TEXT(solution), {
-        durationMs: 2000,
-        onClose: () => loadNewGame(),
-      })
-    }
-
-    return []
-  })
-
   const [stats, setStats] = useState(() => loadStats())
   const [time, setTime] = useState(0)
+
+  const [guesses, setGuesses] = useState<string[] | []>([])
+
+  const loadNewGame = () => {
+    if (time > 0) {
+      setStats(addStatsForCompletedGame(stats, guesses.length, 0))
+      showErrorAlert(START_NEW_GAME_WHILE_RUNNING_TEXT(solution), {
+        durationMs: 2000,
+      })
+    }
+    setIsGameBegun(false)
+    setIsGameLost(false)
+    setIsGameWon(false)
+    setTime(0)
+    setGuesses([])
+    setCurrentGuess('')
+    saveGameStateToLocalStorage({
+      guesses,
+      solution: getRandomWord(),
+      hasWon: false,
+    })
+  }
+
+  useEffect(() => {
+    if (!hasLoaded) {
+      const loaded = loadGameStateFromLocalStorage()
+
+      if (loaded) {
+        setHasLoaded(true)
+        if (loaded.hasWon) {
+          showSuccessAlert(LOAD_FINISHED_GAME_TEXT(loaded.solution), {
+            durationMs: 2000,
+            onClose: () => loadNewGame(),
+          })
+        }
+
+        if (loaded.guesses.length > 0) {
+          showErrorAlert(LOAD_IN_PROGRESS_GAME_TEXT(loaded.solution), {
+            durationMs: 2000,
+            onClose: () => {
+              setStats(addStatsForCompletedGame(stats, guesses.length, 0))
+              loadNewGame()
+            },
+          })
+        }
+      }
+    }
+    // eslint-disable-next-line
+  }, [setGuesses, guesses.length, hasLoaded, stats])
 
   const [isHardMode, setIsHardMode] = useState(
     localStorage.getItem('gameMode')
@@ -156,21 +185,6 @@ function App() {
 
   const clearCurrentRowClass = () => {
     setCurrentRowClass('')
-  }
-
-  const loadNewGame = () => {
-    const newSolution = getRandomWord()
-    setIsGameBegun(false)
-    setIsGameLost(false)
-    setIsGameWon(false)
-    setTime(0)
-    setCurrentGuess('')
-    setGuesses([])
-    saveGameStateToLocalStorage({
-      guesses,
-      solution: newSolution,
-      hasWon: false,
-    })
   }
 
   useEffect(() => {
@@ -265,11 +279,13 @@ function App() {
 
       if (winningWord) {
         setStats(addStatsForCompletedGame(stats, guesses.length, time))
+        setTime(0)
         return setIsGameWon(true)
       }
 
       if (guesses.length === MAX_CHALLENGES - 1) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1, time))
+        setTime(0)
         setIsGameLost(true)
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           persist: true,

@@ -1,3 +1,4 @@
+/*
 import { GameStats } from '../../lib/localStorage'
 import { Progress } from './Progress'
 
@@ -15,6 +16,11 @@ const isCurrentDayStatRow = (
   return isGameWon && numberOfGuessesMade === i + 1
 }
 
+*/
+
+export const Histogram = () => <div />
+
+/*
 export const Histogram = ({
   gameStats,
   isGameWon,
@@ -41,3 +47,4 @@ export const Histogram = ({
     </div>
   )
 }
+*/

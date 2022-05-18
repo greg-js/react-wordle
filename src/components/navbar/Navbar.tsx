@@ -32,7 +32,7 @@ export const Navbar = ({
   loadNewGame
 }: Props) => {
   return (
-    <div className="mb-4">
+    <div className="mb-16">
       <div className="navbar-content relative px-5">
         <div className="flex">
           <InformationCircleIcon

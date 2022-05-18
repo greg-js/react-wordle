@@ -27,9 +27,15 @@ export const CURRENT_STREAK_TEXT = 'Current streak'
 export const BEST_STREAK_TEXT = 'Best streak'
 export const DISCOURAGE_INAPP_BROWSER_TEXT =
   "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser."
-export const LAST_SUCCESSFUL_TIME_TEXT = 'Last'
-export const PERSONAL_BEST_TEXT = 'Best'
+export const LAST_SUCCESSFUL_TIME_TEXT = 'Last time'
+export const AVERAGE_SUCCESSFUL_TIME_TEXT = 'Average time'
+export const PERSONAL_BEST_TEXT = 'Best time'
 export const LOAD_IN_PROGRESS_GAME_TEXT = (solution: string) =>
   `You can't refresh this time-based game. The word was ${solution}. Loading new game..`
 export const LOAD_FINISHED_GAME_TEXT = (solution: string) =>
   `You guessed the previous word (${solution}). Loading new game..`
+export const START_NEW_GAME_WHILE_RUNNING_TEXT = (solution: string) => `You failed to guess '${solution}'. Updating stats and loading a new word..`
+export const TOTAL_GUESSES_TEXT = 'Total guesses'
+export const AVERAGE_GUESSES_TEXT = 'Guesses/winning game'
+export const MOST_GUESSES_TEXT = 'Most guesses to win'
+export const LEAST_GUESSES_TEXT = 'Least guesses to win'

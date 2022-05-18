@@ -19,7 +19,6 @@ export const loadGameStateFromLocalStorage = () => {
 const gameStatKey = 'gameStats'
 
 export type GameStats = {
-  winDistribution: number[]
   gamesFailed: number
   currentStreak: number
   bestStreak: number
@@ -27,7 +26,8 @@ export type GameStats = {
   successRate: number
   lastSuccessfulTime: number
   personalBest: number
-  successHistory: number[]
+  timeHistory: number[]
+  guessCounts: number[]
 }
 
 export const saveStatsToLocalStorage = (gameStats: GameStats) => {

@@ -14,16 +14,16 @@ export const addStatsForCompletedGame = (
   const stats = { ...gameStats }
 
   stats.totalGames += 1
+  stats.timeHistory.push(time)
+  stats.guessCounts.push(count)
 
-  if (count >= MAX_CHALLENGES) {
+  if (time === 0 || count >= MAX_CHALLENGES) {
     // A fail situation
     stats.currentStreak = 0
     stats.gamesFailed += 1
   } else {
     stats.lastSuccessfulTime = time
-    stats.winDistribution[count] += 1
     stats.currentStreak += 1
-    stats.successHistory.push(time)
 
     if (stats.bestStreak < stats.currentStreak) {
       stats.bestStreak = stats.currentStreak
@@ -41,7 +41,6 @@ export const addStatsForCompletedGame = (
 }
 
 const defaultStats: GameStats = {
-  winDistribution: Array.from(new Array(MAX_CHALLENGES), () => 0),
   gamesFailed: 0,
   currentStreak: 0,
   bestStreak: 0,
@@ -49,7 +48,8 @@ const defaultStats: GameStats = {
   successRate: 0,
   lastSuccessfulTime: 0,
   personalBest: 0,
-  successHistory: [],
+  timeHistory: [],
+  guessCounts: [],
 }
 
 export const loadStats = () => {
