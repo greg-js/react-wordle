@@ -11,7 +11,9 @@ import {
   AVERAGE_GUESSES_TEXT,
   MOST_GUESSES_TEXT,
   LEAST_GUESSES_TEXT,
-  AVERAGE_SUCCESSFUL_TIME_TEXT
+  AVERAGE_SUCCESSFUL_TIME_TEXT,
+  TOTAL_TIME_PLAYED_TEXT,
+  GUESSES_PER_SECOND_TEXT
 } from '../../constants/strings'
 
 type Props = {
@@ -43,18 +45,25 @@ const StatItem = ({
 export const StatBar = ({ gameStats }: Props) => {
   const gamesWon = gameStats.totalGames - gameStats.gamesFailed
   const totalGuesses = gameStats.guessCounts.reduce((prev, cur) => (prev + cur), 0)
-  const guessesPerSuccessfulGame = totalGuesses ? totalGuesses / gamesWon : 'N/A'
+  const guessesPerSuccessfulGame = totalGuesses ? (totalGuesses / gamesWon).toFixed(2) : 'N/A'
   const mostGuesses = totalGuesses ? Math.max(...gameStats.guessCounts) : 'N/A'
   const leastGuesses = totalGuesses ? Math.min(...gameStats.guessCounts.filter(guess => guess !== 0)) : 'N/A'
   const successfulTimeHistory = gameStats.timeHistory.filter(time => time !== 0)
-  const averageTime = gamesWon > 0 ? Math.floor(successfulTimeHistory.reduce((prev, cur) => (prev + cur), 0) / gamesWon) : 0
+  const totalTimePlayed = successfulTimeHistory.reduce((prev, cur) => (prev + cur), 0)
+  const averageTime = gamesWon > 0 ? Math.floor(totalTimePlayed / gamesWon) : 0
+  const guessesPerSecond = gamesWon > 0 ? (totalGuesses / (totalTimePlayed / 1000)).toFixed(2) : 'N/A'
 
   return (
     <div>
       <div className="flex justify-evenly my-2">
         <StatItem label={LAST_SUCCESSFUL_TIME_TEXT} value={gameStats.lastSuccessfulTime} isTimeStat />
+      </div>
+      <div className="flex justify-evenly my-2">
         <StatItem label={AVERAGE_SUCCESSFUL_TIME_TEXT} value={averageTime} isTimeStat />
         <StatItem label={PERSONAL_BEST_TEXT} value={gameStats.personalBest} isTimeStat />
+      </div>
+      <div className="flex justify-center my-2">
+        <StatItem label={TOTAL_TIME_PLAYED_TEXT} value={totalTimePlayed} isTimeStat />
       </div>
       <div className="flex justify-center my-2">
         <StatItem label={TOTAL_TRIES_TEXT} value={gameStats.totalGames} />
@@ -67,6 +76,9 @@ export const StatBar = ({ gameStats }: Props) => {
         <StatItem label={AVERAGE_GUESSES_TEXT} value={guessesPerSuccessfulGame} />
         <StatItem label={MOST_GUESSES_TEXT} value={mostGuesses} />
         <StatItem label={LEAST_GUESSES_TEXT} value={leastGuesses} />
+      </div>
+      <div className="flex justify-center my-2">
+        <StatItem label={GUESSES_PER_SECOND_TEXT} value={guessesPerSecond} />
       </div>
     </div>
   )

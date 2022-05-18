@@ -15,7 +15,7 @@ export const addStatsForCompletedGame = (
 
   stats.totalGames += 1
   stats.timeHistory.push(time)
-  stats.guessCounts.push(count)
+  stats.guessCounts.push(count + 1) // include the winning guess as well in the stats
 
   if (time === 0 || count >= MAX_CHALLENGES) {
     // A fail situation
