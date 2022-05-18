@@ -29,3 +29,7 @@ export const DISCOURAGE_INAPP_BROWSER_TEXT =
   "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser."
 export const LAST_SUCCESSFUL_TIME_TEXT = 'Last'
 export const PERSONAL_BEST_TEXT = 'Best'
+export const LOAD_IN_PROGRESS_GAME_TEXT = (solution: string) =>
+  `You can't refresh this time-based game. The word was ${solution}. Loading new game..`
+export const LOAD_FINISHED_GAME_TEXT = (solution: string) =>
+  `You guessed the previous word (${solution}). Loading new game..`

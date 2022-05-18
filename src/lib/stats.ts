@@ -5,12 +5,10 @@ import {
   saveStatsToLocalStorage,
 } from './localStorage'
 
-// In stats array elements 0-5 are successes in 1-6 trys
-
 export const addStatsForCompletedGame = (
   gameStats: GameStats,
   count: number,
-  time: number
+  time: number,
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
@@ -51,7 +49,7 @@ const defaultStats: GameStats = {
   successRate: 0,
   lastSuccessfulTime: 0,
   personalBest: 0,
-  successHistory: []
+  successHistory: [],
 }
 
 export const loadStats = () => {

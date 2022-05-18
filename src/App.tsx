@@ -12,10 +12,11 @@ import {
   CORRECT_WORD_MESSAGE,
   HARD_MODE_ALERT_MESSAGE,
   DISCOURAGE_INAPP_BROWSER_TEXT,
+  LOAD_IN_PROGRESS_GAME_TEXT,
+  LOAD_FINISHED_GAME_TEXT,
 } from './constants/strings'
 import {
   MAX_CHALLENGES,
-  MAX_VISIBLE_LINES,
   REVEAL_TIME_MS,
   WELCOME_INFO_MODAL_MS,
   DISCOURAGE_INAPP_BROWSERS,
@@ -69,22 +70,27 @@ function App() {
     getStoredIsHighContrastMode()
   )
   const [isRevealing, setIsRevealing] = useState(false)
-  const [guesses, setGuesses] = useState<string[]>(() => {
+  const [guesses, setGuesses] = useState<[] | string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
-    if (loaded?.solution !== solution) {
+
+    if (!loaded) return []
+
+    if (loaded.hasWon) {
+      showSuccessAlert(LOAD_FINISHED_GAME_TEXT(solution), {
+        durationMs: 2000,
+        onClose: () => loadNewGame(),
+      })
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution)
-    if (gameWasWon) {
-      setIsGameWon(true)
-    }
-    if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
-      setIsGameLost(true)
-      showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
-        persist: true,
+
+    if (loaded.guesses.length > 0) {
+      showErrorAlert(LOAD_IN_PROGRESS_GAME_TEXT(solution), {
+        durationMs: 2000,
+        onClose: () => loadNewGame(),
       })
     }
-    return loaded.guesses
+
+    return []
   })
 
   const [stats, setStats] = useState(() => loadStats())
@@ -160,12 +166,16 @@ function App() {
     setTime(0)
     setCurrentGuess('')
     setGuesses([])
-    saveGameStateToLocalStorage({ guesses, solution: newSolution })
+    saveGameStateToLocalStorage({
+      guesses,
+      solution: newSolution,
+      hasWon: false,
+    })
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution })
-  }, [guesses])
+    saveGameStateToLocalStorage({ guesses, solution, hasWon: isGameWon })
+  }, [guesses, isGameWon])
 
   useEffect(() => {
     if (isGameWon) {
