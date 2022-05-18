@@ -15,6 +15,7 @@ import {
 } from './constants/strings'
 import {
   MAX_CHALLENGES,
+  MAX_VISIBLE_LINES,
   REVEAL_TIME_MS,
   WELCOME_INFO_MODAL_MS,
   DISCOURAGE_INAPP_BROWSERS,
@@ -283,7 +284,7 @@ function App() {
         loadNewGame={loadNewGame}
       />
       <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
-        <div className="pb-6 grow">
+        <div className="grow">
           <Grid
             solution={solution}
             guesses={guesses}

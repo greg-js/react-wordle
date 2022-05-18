@@ -77,6 +77,10 @@ svg.cursor-pointer:hover {
   justify-content: space-between;
 }
 
+.visible-area {
+  height: 300px;
+}
+
 @keyframes revealAbsentCharCell {
   0% {
     transform: rotateX(0deg);
