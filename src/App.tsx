@@ -109,9 +109,7 @@ function App() {
             durationMs: 2000,
             onClose: () => loadNewGame(),
           })
-        }
-
-        if (loaded.guesses.length > 0) {
+        } else if (loaded.guesses.length > 0) {
           showErrorAlert(LOAD_IN_PROGRESS_GAME_TEXT(loaded.solution), {
             durationMs: 2000,
             onClose: () => {
