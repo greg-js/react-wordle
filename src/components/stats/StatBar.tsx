@@ -45,13 +45,13 @@ const StatItem = ({
 export const StatBar = ({ gameStats }: Props) => {
   const gamesWon = gameStats.totalGames - gameStats.gamesFailed
   const totalGuesses = gameStats.guessCounts.reduce((prev, cur) => (prev + cur), 0)
-  const guessesPerSuccessfulGame = totalGuesses ? (totalGuesses / gamesWon).toFixed(2) : 'N/A'
+  const guessesPerGame = totalGuesses ? (totalGuesses / gameStats.totalGames).toFixed(2) : 'N/A'
   const mostGuesses = totalGuesses ? Math.max(...gameStats.guessCounts) : 'N/A'
   const leastGuesses = totalGuesses ? Math.min(...gameStats.guessCounts.filter(guess => guess !== 0)) : 'N/A'
   const successfulTimeHistory = gameStats.timeHistory.filter(time => time !== 0)
   const totalTimePlayed = successfulTimeHistory.reduce((prev, cur) => (prev + cur), 0)
-  const averageTime = gamesWon > 0 ? Math.floor(totalTimePlayed / gamesWon) : 0
-  const guessesPerSecond = gamesWon > 0 ? (totalGuesses / (totalTimePlayed / 1000)).toFixed(2) : 'N/A'
+  const averageTime = gamesWon > 0 ? Math.floor(totalTimePlayed / gameStats.totalGames) : 0
+  const guessesPerSecond = gameStats.totalGames > 0 ? (totalGuesses / (totalTimePlayed / 1000)).toFixed(2) : 'N/A'
 
   return (
     <div>
@@ -73,7 +73,7 @@ export const StatBar = ({ gameStats }: Props) => {
       </div>
       <div className="flex justify-center my-2">
         <StatItem label={TOTAL_GUESSES_TEXT} value={totalGuesses} />
-        <StatItem label={AVERAGE_GUESSES_TEXT} value={guessesPerSuccessfulGame} />
+        <StatItem label={AVERAGE_GUESSES_TEXT} value={guessesPerGame} />
         <StatItem label={MOST_GUESSES_TEXT} value={mostGuesses} />
         <StatItem label={LEAST_GUESSES_TEXT} value={leastGuesses} />
       </div>
