@@ -9,6 +9,7 @@ type Props = {
   currentGuess: string
   isRevealing?: boolean
   currentRowClassName: string
+  isHardMode: boolean
 }
 
 export const Grid = ({
@@ -17,12 +18,15 @@ export const Grid = ({
   currentGuess,
   isRevealing,
   currentRowClassName,
+  isHardMode
 }: Props) => {
-  const empties: string[] = Array.from(Array(Math.max(0, MAX_VISIBLE_LINES - guesses.length - 1)))
+  const visibleLines = isHardMode ? MAX_VISIBLE_LINES - 1 : MAX_VISIBLE_LINES
+
+  const empties: string[] = Array.from(Array(Math.max(0, visibleLines - guesses.length - 1)))
 
   return (
     <>
-      {guesses.slice(-MAX_VISIBLE_LINES).map((guess, i, arr) => (
+      {guesses.slice(-visibleLines).map((guess, i, arr) => (
         <CompletedRow
           key={i}
           solution={solution}

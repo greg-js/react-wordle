@@ -136,16 +136,6 @@ function App() {
   )
 
   useEffect(() => {
-    // if no game state on load,
-    // show the user the how-to info modal
-    if (!loadGameStateFromLocalStorage()) {
-      setTimeout(() => {
-        setIsInfoModalOpen(true)
-      }, WELCOME_INFO_MODAL_MS)
-    }
-  })
-
-  useEffect(() => {
     DISCOURAGE_INAPP_BROWSERS &&
       isInAppBrowser() &&
       showErrorAlert(DISCOURAGE_INAPP_BROWSER_TEXT, {
@@ -174,12 +164,8 @@ function App() {
   }
 
   const handleHardMode = (isHard: boolean) => {
-    if (guesses.length === 0 || localStorage.getItem('gameMode') === 'hard') {
-      setIsHardMode(isHard)
-      localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
-    } else {
-      showErrorAlert(HARD_MODE_ALERT_MESSAGE)
-    }
+    setIsHardMode(isHard)
+    localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
   }
 
   const handleHighContrastMode = (isHighContrast: boolean) => {
@@ -320,6 +306,7 @@ function App() {
             currentGuess={currentGuess}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
+            isHardMode={isHardMode}
           />
         </div>
         <Keyboard
