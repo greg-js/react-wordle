@@ -1,0 +1,14 @@
+.timer-wrapper {
+  width: calc(100% - 2.5rem);
+  z-index: -1;
+}
+
+.digit {
+  font-family: 'Courier New', Courier, monospace;
+  height: 3rem;
+}
+
+.digit--small {
+  font-family: 'Courier New', Courier, monospace;
+  height: 2rem;
+}

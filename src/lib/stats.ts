@@ -5,27 +5,32 @@ import {
   saveStatsToLocalStorage,
 } from './localStorage'
 
-// In stats array elements 0-5 are successes in 1-6 trys
-
 export const addStatsForCompletedGame = (
   gameStats: GameStats,
-  count: number
+  count: number,
+  time: number,
 ) => {
   // Count is number of incorrect guesses before end.
   const stats = { ...gameStats }
 
   stats.totalGames += 1
+  stats.timeHistory.push(time)
+  stats.guessCounts.push(count + 1) // include the winning guess as well in the stats
 
-  if (count >= MAX_CHALLENGES) {
+  if (time === 0 || count >= MAX_CHALLENGES) {
     // A fail situation
     stats.currentStreak = 0
     stats.gamesFailed += 1
   } else {
-    stats.winDistribution[count] += 1
+    stats.lastSuccessfulTime = time
     stats.currentStreak += 1
 
     if (stats.bestStreak < stats.currentStreak) {
       stats.bestStreak = stats.currentStreak
+    }
+
+    if (!stats.personalBest || time < stats.personalBest) {
+      stats.personalBest = time
     }
   }
 
@@ -36,12 +41,15 @@ export const addStatsForCompletedGame = (
 }
 
 const defaultStats: GameStats = {
-  winDistribution: Array.from(new Array(MAX_CHALLENGES), () => 0),
   gamesFailed: 0,
   currentStreak: 0,
   bestStreak: 0,
   totalGames: 0,
   successRate: 0,
+  lastSuccessfulTime: 0,
+  personalBest: 0,
+  timeHistory: [],
+  guessCounts: [],
 }
 
 export const loadStats = () => {
