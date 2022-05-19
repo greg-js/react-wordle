@@ -55,7 +55,7 @@ export const Timer = ({
   }, [setTime, time, isRunning, isPaused, isGameBegun, isGameWon, isGameLost, setIsPaused, isRevealing])
 
   return isGameBegun ? (
-    <div className="timer px-4 bg-white">
+    <div className="timer px-2 bg-white">
       <TimeDisplay time={time} />
     </div>
   ) : (
