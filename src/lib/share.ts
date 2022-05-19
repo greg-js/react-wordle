@@ -25,7 +25,8 @@ export const shareStatus = (
       solution,
       guesses,
       getEmojiTiles(isDarkMode, isHighContrastMode)
-    )
+    ) + `\n\nTry it out at https://main.d1imbzohz0om1w.amplifyapp.com/`
+
 
   const shareData = { text: textToShare }
 
