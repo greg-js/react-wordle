@@ -79,7 +79,7 @@ function App() {
   const [guesses, setGuesses] = useState<string[] | []>([])
 
   const loadNewGame = () => {
-    if (time > 0) {
+    if (time > 0 && !isGameWon && !isGameLost) {
       setStats(addStatsForCompletedGame(stats, guesses.length, 0))
       showErrorAlert(START_NEW_GAME_WHILE_RUNNING_TEXT(solution), {
         durationMs: 2000,
@@ -121,7 +121,7 @@ function App() {
       }
     }
     // eslint-disable-next-line
-  }, [setGuesses, guesses.length, hasLoaded, stats])
+  }, [setGuesses, guesses.length, hasLoaded])
 
   const [isHardMode, setIsHardMode] = useState(
     localStorage.getItem('gameMode')
@@ -277,13 +277,11 @@ function App() {
 
       if (winningWord) {
         setStats(addStatsForCompletedGame(stats, guesses.length, time))
-        setTime(0)
         return setIsGameWon(true)
       }
 
       if (guesses.length === MAX_CHALLENGES - 1) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1, time))
-        setTime(0)
         setIsGameLost(true)
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           persist: true,
@@ -342,6 +340,7 @@ function App() {
           isDarkMode={isDarkMode}
           isHighContrastMode={isHighContrastMode}
           numberOfGuessesMade={guesses.length}
+          time={time}
         />
         <SettingsModal
           isOpen={isSettingsModalOpen}

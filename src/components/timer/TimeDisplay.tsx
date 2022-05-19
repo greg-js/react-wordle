@@ -1,3 +1,9 @@
+type TextProps = {
+  time: number
+}
+
+export const textTimeDisplay = ({ time }: TextProps) => `${`0${Math.floor((time / 60000) % 60)}`.slice(-2)}:${`0${Math.floor((time / 1000) % 60)}`.slice(-2)}.${`0${Math.floor((time / 10) % 100)}`.slice(-2)}`
+
 type Props = {
   time: number
   isStatDisplay?: boolean
@@ -5,7 +11,7 @@ type Props = {
 
 export const TimeDisplay = ({
   time,
-  isStatDisplay = false
+  isStatDisplay = false,
 }: Props) => {
   const minutes = Math.floor((time / 60000) % 60)
   const seconds = Math.floor((time / 1000) % 60)

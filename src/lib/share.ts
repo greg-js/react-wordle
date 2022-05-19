@@ -1,8 +1,8 @@
 import { getGuessStatuses } from './statuses'
 import { solutionIndex, unicodeSplit } from './words'
 import { GAME_TITLE } from '../constants/strings'
-import { MAX_CHALLENGES } from '../constants/settings'
 import { UAParser } from 'ua-parser-js'
+import { textTimeDisplay } from '../components/timer/TimeDisplay'
 
 const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
 const parser = new UAParser()
@@ -12,15 +12,14 @@ const device = parser.getDevice()
 export const shareStatus = (
   solution: string,
   guesses: string[],
-  lost: boolean,
   isHardMode: boolean,
   isDarkMode: boolean,
   isHighContrastMode: boolean,
-  handleShareToClipboard: () => void
+  handleShareToClipboard: () => void,
+  time: number
 ) => {
   const textToShare =
-    `${GAME_TITLE} ${solutionIndex} ${lost ? 'X' : guesses.length
-    }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n\n` +
+    `I just played ${GAME_TITLE} ${isHardMode ? '(hard mode)' : ''} and found word #${solutionIndex} in ${textTimeDisplay({ time })}, using ${guesses.length} guesses\n\n` +
     generateEmojiGrid(
       solution,
       guesses,
