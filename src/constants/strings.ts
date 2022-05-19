@@ -19,7 +19,7 @@ export const ENTER_TEXT = 'Enter'
 export const DELETE_TEXT = 'Delete'
 export const STATISTICS_TITLE = 'Statistics'
 export const GUESS_DISTRIBUTION_TEXT = 'Guess Distribution'
-export const NEW_WORD_TEXT = 'New word in'
+export const NEW_WORD_TEXT = 'New word of the day in'
 export const SHARE_TEXT = 'Share'
 export const TOTAL_TRIES_TEXT = 'Total tries'
 export const SUCCESS_RATE_TEXT = 'Success rate'
@@ -34,9 +34,11 @@ export const LOAD_IN_PROGRESS_GAME_TEXT = (solution: string) =>
   `You can't refresh this time-based game. The word was ${solution}. Loading new game..`
 export const LOAD_FINISHED_GAME_TEXT = (solution: string) =>
   `You guessed the previous word (${solution}). Loading new game..`
-export const START_NEW_GAME_WHILE_RUNNING_TEXT = (solution: string) => `You failed to guess '${solution}'. Updating stats and loading a new word..`
+export const END_GAME_WHILE_RUNNING_TEXT = (solution: string) => `You failed to guess '${solution}'. Updating stats and loading a new word..`
+export const LOAD_NEW_WORD_TEXT = `New word loaded`
+export const LOAD_NEW_WORD_BUTTON_TEXT = `Load new word`
 export const TOTAL_GUESSES_TEXT = 'Total guesses'
-export const AVERAGE_GUESSES_TEXT = 'Guesses/winning game'
+export const AVERAGE_GUESSES_TEXT = 'Guesses per game'
 export const MOST_GUESSES_TEXT = 'Most guesses to win'
 export const LEAST_GUESSES_TEXT = 'Least guesses to win'
 export const TOTAL_TIME_PLAYED_TEXT = 'Total time in winning games'

@@ -1,5 +1,5 @@
 import { getGuessStatuses } from './statuses'
-import { solutionIndex, unicodeSplit } from './words'
+import { unicodeSplit } from './words'
 import { GAME_TITLE } from '../constants/strings'
 import { UAParser } from 'ua-parser-js'
 import { textTimeDisplay } from '../components/timer/TimeDisplay'
@@ -16,10 +16,11 @@ export const shareStatus = (
   isDarkMode: boolean,
   isHighContrastMode: boolean,
   handleShareToClipboard: () => void,
-  time: number
+  time: number,
+  isGameWon: boolean
 ) => {
   const textToShare =
-    `I just played ${GAME_TITLE} ${isHardMode ? '(hard mode)' : ''} and found word #${solutionIndex} in ${textTimeDisplay({ time })}, using ${guesses.length} guesses\n\n` +
+    `I just played ${GAME_TITLE}${isHardMode ? ' (hard mode)' : ''} and ${isGameWon ? 'guessed' : 'failed to guess'} the word in ${textTimeDisplay({ time })}, using ${guesses.length} guesses\n\n` +
     generateEmojiGrid(
       solution,
       guesses,

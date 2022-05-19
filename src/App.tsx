@@ -14,7 +14,8 @@ import {
   DISCOURAGE_INAPP_BROWSER_TEXT,
   LOAD_IN_PROGRESS_GAME_TEXT,
   LOAD_FINISHED_GAME_TEXT,
-  START_NEW_GAME_WHILE_RUNNING_TEXT,
+  END_GAME_WHILE_RUNNING_TEXT,
+  LOAD_NEW_WORD_TEXT,
 } from './constants/strings'
 import {
   MAX_CHALLENGES,
@@ -79,12 +80,9 @@ function App() {
   const [guesses, setGuesses] = useState<string[] | []>([])
 
   const loadNewGame = () => {
-    if (time > 0 && !isGameWon && !isGameLost) {
-      setStats(addStatsForCompletedGame(stats, guesses.length, 0))
-      showErrorAlert(START_NEW_GAME_WHILE_RUNNING_TEXT(solution), {
-        durationMs: 2000,
-      })
-    }
+    showErrorAlert(LOAD_NEW_WORD_TEXT, {
+      durationMs: 1000,
+    })
     setIsGameBegun(false)
     setIsGameLost(false)
     setIsGameWon(false)
@@ -95,6 +93,14 @@ function App() {
       guesses,
       solution: getRandomWord(),
       hasWon: false,
+    })
+  }
+
+  const endGame = () => {
+    setIsGameLost(true)
+    setStats(addStatsForCompletedGame(stats, guesses.length, 0))
+    showErrorAlert(END_GAME_WHILE_RUNNING_TEXT(solution), {
+      durationMs: 2000,
     })
   }
 
@@ -304,6 +310,7 @@ function App() {
         time={time}
         setTime={setTime}
         loadNewGame={loadNewGame}
+        endGame={endGame}
       />
       <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
         <div className="grow">
@@ -341,6 +348,7 @@ function App() {
           isHighContrastMode={isHighContrastMode}
           numberOfGuessesMade={guesses.length}
           time={time}
+          loadNewGame={loadNewGame}
         />
         <SettingsModal
           isOpen={isSettingsModalOpen}

@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
+import { Tooltip } from 'react-tippy'
 import {
   ChartBarIcon,
   CogIcon,
   InformationCircleIcon,
-  PlayIcon
+  PlayIcon,
+  StopIcon
 } from '@heroicons/react/outline'
 import { Timer } from '../timer/Timer'
 
@@ -17,6 +20,7 @@ type Props = {
   time: number
   setTime: (value: number) => void
   loadNewGame: () => void
+  endGame: () => void
 }
 
 export const Navbar = ({
@@ -29,8 +33,17 @@ export const Navbar = ({
   isRevealing,
   time,
   setTime,
-  loadNewGame
+  loadNewGame,
+  endGame
 }: Props) => {
+  const [shouldShowPrompt, setShouldShowPrompt] = useState(true)
+
+  useEffect(() => {
+    if (!isGameBegun) {
+      setShouldShowPrompt(true)
+    } else setShouldShowPrompt(false)
+  }, [isGameBegun, setShouldShowPrompt])
+
   return (
     <div className="mb-16">
       <div className="navbar-content relative px-5">
@@ -39,10 +52,27 @@ export const Navbar = ({
             className="h-6 w-6 mr-3 cursor-pointer dark:stroke-white"
             onClick={() => setIsInfoModalOpen(true)}
           />
-          <PlayIcon
-            className="h-6 w-6 cursor-pointer dark:stroke-white"
-            onClick={() => loadNewGame()}
-          />
+          {!isGameBegun || isGameWon || isGameLost ? (
+            <Tooltip
+              html={(<span className="px-2 py-1 bg-indigo-600 text-white rounded-full ml-2">Load a new word</span>)}
+              position="right"
+            >
+              <PlayIcon
+                className="h-6 w-6 cursor-pointer dark:stroke-white"
+                onClick={() => loadNewGame()}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip
+              html={(<span className="px-2 py-1 bg-indigo-600 text-white rounded-full ml-2">Give up</span>)}
+              position="right"
+            >
+              <StopIcon
+                className="h-6 w-6 cursor-pointer dark:stroke-white"
+                onClick={() => endGame()}
+              />
+            </Tooltip>
+          )}
         </div>
         <div className="timer-wrapper text-center">
           <Timer
@@ -66,6 +96,13 @@ export const Navbar = ({
         </div>
       </div>
       <hr></hr>
+      {shouldShowPrompt ? (
+        <div className="w-full relative">
+          <p className="w-full absolute type-prompt text-center bg-green-400 p-2">
+            Start typing to play
+          </p>
+        </div>
+      ) : null}
     </div>
   )
 }
