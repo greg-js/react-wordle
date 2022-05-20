@@ -293,7 +293,7 @@ function App() {
         loadNewGame={loadNewGame}
         endGame={endGame}
       />
-      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
+      <div className="pt-8 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
         <div className="grow">
           <Grid
             solution={solution}
