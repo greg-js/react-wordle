@@ -11,6 +11,7 @@ type Props = {
   solution: string
   guesses: string[]
   isRevealing?: boolean
+  isPeeking?: boolean
 }
 
 export const Keyboard = ({
@@ -20,6 +21,7 @@ export const Keyboard = ({
   solution,
   guesses,
   isRevealing,
+  isPeeking,
 }: Props) => {
   const charStatuses = getStatuses(solution, guesses)
 
@@ -63,6 +65,7 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            isPeeking={isPeeking}
           />
         ))}
       </div>
@@ -74,6 +77,7 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            isPeeking={isPeeking}
           />
         ))}
       </div>
@@ -88,6 +92,7 @@ export const Keyboard = ({
             onClick={onClick}
             status={charStatuses[key]}
             isRevealing={isRevealing}
+            isPeeking={isPeeking}
           />
         ))}
         <Key width={65.4} value="DELETE" onClick={onClick}>

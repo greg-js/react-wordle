@@ -19,6 +19,7 @@ import {
 import {
   MAX_CHALLENGES,
   REVEAL_TIME_MS,
+  PEEK_TIME_MS,
   DISCOURAGE_INAPP_BROWSERS,
 } from './constants/settings'
 import {
@@ -71,6 +72,7 @@ function App() {
 
   const [hasLoaded, setHasLoaded] = useState(false)
   const [isRevealing, setIsRevealing] = useState(false)
+  const [isPeeking, setIsPeeking] = useState(false)
   const [stats, setStats] = useState(() => loadStats())
   const [time, setTime] = useState(0)
 
@@ -243,6 +245,13 @@ function App() {
       setIsRevealing(false)
     }, REVEAL_TIME_MS * solution.length)
 
+    setIsPeeking(true)
+    // turn this back off after all
+    // chars have been revealed
+    setTimeout(() => {
+      setIsPeeking(false)
+    }, REVEAL_TIME_MS * solution.length - 1 + PEEK_TIME_MS)
+
     const winningWord = isWinningWord(currentGuess)
 
     if (
@@ -291,6 +300,7 @@ function App() {
             guesses={guesses}
             currentGuess={currentGuess}
             isRevealing={isRevealing}
+            isPeeking={isPeeking}
             currentRowClassName={currentRowClass}
             isHardMode={isHardMode}
           />
