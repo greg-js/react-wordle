@@ -12,6 +12,7 @@ type Props = {
   status?: CharStatus
   onClick: (value: string) => void
   isRevealing?: boolean
+  isPeeking?: boolean
 }
 
 export const Key = ({
@@ -21,6 +22,7 @@ export const Key = ({
   value,
   onClick,
   isRevealing,
+  isPeeking,
 }: Props) => {
   const keyDelayMs = REVEAL_TIME_MS * solution.length
   const isHighContrast = getStoredIsHighContrastMode()
@@ -33,13 +35,9 @@ export const Key = ({
         !status,
       'bg-slate-400 dark:bg-slate-800 text-white': status === 'absent',
       'bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white':
-        status === 'correct' && isHighContrast,
-      'bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-white':
-        status === 'present' && isHighContrast,
-      'bg-green-500 hover:bg-green-600 active:bg-green-700 text-white':
-        status === 'correct' && !isHighContrast,
+        (status === 'correct' || status === 'present') && isHighContrast,
       'bg-yellow-500 hover:bg-yellow-600 active:bg-yellow-700 text-white':
-        status === 'present' && !isHighContrast,
+        (status === 'correct' || status === 'present') && !isHighContrast,
     }
   )
 

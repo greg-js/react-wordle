@@ -19,6 +19,7 @@ import {
 import {
   MAX_CHALLENGES,
   REVEAL_TIME_MS,
+  PEEK_TIME_MS,
   DISCOURAGE_INAPP_BROWSERS,
 } from './constants/settings'
 import {
@@ -71,6 +72,7 @@ function App() {
 
   const [hasLoaded, setHasLoaded] = useState(false)
   const [isRevealing, setIsRevealing] = useState(false)
+  const [isPeeking, setIsPeeking] = useState(false)
   const [stats, setStats] = useState(() => loadStats())
   const [time, setTime] = useState(0)
 
@@ -243,6 +245,13 @@ function App() {
       setIsRevealing(false)
     }, REVEAL_TIME_MS * solution.length)
 
+    setIsPeeking(true)
+    // turn this back off after all
+    // chars have been revealed
+    setTimeout(() => {
+      setIsPeeking(false)
+    }, REVEAL_TIME_MS * solution.length - 1 + PEEK_TIME_MS)
+
     const winningWord = isWinningWord(currentGuess)
 
     if (
@@ -284,13 +293,14 @@ function App() {
         loadNewGame={loadNewGame}
         endGame={endGame}
       />
-      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
+      <div className="pt-8 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow relative">
         <div className="grow">
           <Grid
             solution={solution}
             guesses={guesses}
             currentGuess={currentGuess}
             isRevealing={isRevealing}
+            isPeeking={isPeeking}
             currentRowClassName={currentRowClass}
             isHardMode={isHardMode}
           />
